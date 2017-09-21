@@ -1,0 +1,10 @@
+examples/*
+src/*
+etc/*
+node_modules
+.DS_Store
+build/*
+npm-debug.log
+config.jsx
+!config.jsx.dist
+.idea
