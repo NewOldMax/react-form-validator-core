@@ -17,8 +17,9 @@ Default validation rules:
 + isPositive
 + minNumber
 + maxNumber
-+ minLength
-+ maxLength
++ minStringLength
++ maxStringLength
++ isString
 
 Some rules can accept extra parameter, example:
 ````javascript
