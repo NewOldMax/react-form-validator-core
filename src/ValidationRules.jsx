@@ -42,6 +42,9 @@ const validations = {
     maxNumber: (value, max) => !isExisty(value) || isEmpty(value) || parseInt(value, 10) <= parseInt(max, 10),
 
     minNumber: (value, min) => !isExisty(value) || isEmpty(value) || parseInt(value, 10) >= parseInt(min, 10),
+
+    minLength: (value, length) => !isExisty(value) || isEmpty(value) || value.length >= length,
+    maxLength: (value, length) => !isExisty(value) || value.length <= length
 };
 
 module.exports = validations;
