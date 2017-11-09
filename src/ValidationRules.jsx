@@ -46,6 +46,8 @@ const validations = {
     isString: value => !isEmpty(value) || typeof value === 'string' || value instanceof String,
     minStringLength: (value, length) => validations.isString(value) || value.length >= length,
     maxStringLength: (value, length) => validations.isString(value) || value.length <= length,
+
+    isEqual: (value, equalValue) => value === equalValue,
 };
 
 module.exports = validations;
