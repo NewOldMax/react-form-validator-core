@@ -20,6 +20,7 @@ Default validation rules:
 + minStringLength
 + maxStringLength
 + isString
++ isEqual
 
 Some rules can accept extra parameter, example:
 ````javascript
