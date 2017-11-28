@@ -44,8 +44,8 @@ const validations = {
     minNumber: (value, min) => !isExisty(value) || isEmpty(value) || parseInt(value, 10) >= parseInt(min, 10),
 
     isString: value => !isEmpty(value) || typeof value === 'string' || value instanceof String,
-    minStringLength: (value, length) => validations.isString(value) || value.length >= length,
-    maxStringLength: (value, length) => validations.isString(value) || value.length <= length,
+    minStringLength: (value, length) => validations.isString(value) && value.length >= length,
+    maxStringLength: (value, length) => validations.isString(value) && value.length <= length,
 };
 
 module.exports = validations;
