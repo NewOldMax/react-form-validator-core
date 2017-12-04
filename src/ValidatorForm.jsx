@@ -33,18 +33,16 @@ class ValidatorForm extends React.Component {
     }
 
     getValidator(validator, value, includeRequired) {
-        let result = true;
+        let extra;
         let name = validator;
         if (name !== 'required' || includeRequired) {
-            let extra;
             const splitIdx = validator.indexOf(':');
             if (splitIdx !== -1) {
                 name = validator.substring(0, splitIdx);
                 extra = validator.substring(splitIdx + 1);
             }
-            result = Rules[name](value, extra);
         }
-        return result;
+        return Rules[name](value, extra);
     }
 
     attachToForm(component) {
