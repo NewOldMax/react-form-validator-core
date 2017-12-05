@@ -32,7 +32,7 @@ class ValidatorComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.instantValidate && nextProps.value !== this.props.value) {
-            this.validate(nextProps.value);
+            this.validate(nextProps.value, nextProps.withRequiredValidator);
         }
         if (nextProps.validators && nextProps.errorMessages &&
             (this.props.validators !== nextProps.validators || this.props.errorMessages !== nextProps.errorMessages)) {
@@ -95,7 +95,6 @@ class ValidatorComponent extends React.Component {
         });
     }
 
-
     isValid() {
         return this.state.isValid;
     }
@@ -118,6 +117,7 @@ ValidatorComponent.propTypes = {
     name: PropTypes.string,
     value: PropTypes.any,
     validatorListener: PropTypes.func,
+    withRequiredValidator: PropTypes.bool,
 };
 
 ValidatorComponent.defaultProps = {

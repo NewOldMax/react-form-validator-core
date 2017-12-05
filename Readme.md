@@ -121,7 +121,7 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
 | errorMessages   | false    | array    |               | Array of error messages. Order of messages should be the same as `validators` prop.    |
 | name            | true     | string   |               | Name of input                                                                          |
 | validatorListener | false  | function |               | It triggers after each validation. It will return `true` or `false`                    |
-
+| withRequiredValidator | false | bool  |               | Allow to use `required` validator in any validation trigger, not only form submit      |
 
 ### Implemetations
 
