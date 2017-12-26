@@ -107,13 +107,23 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
 
 #### ValidatorForm
 
++ Props
+
 | Prop            | Required | Type     | Default value | Description                                                                                                                  |
 |-----------------|----------|----------|---------------|------------------------------------------------------------------------------------------------------------------------------|
 | onSubmit        | true     | function |               | Callback for form that fires when all validations are passed                                                                 |
 | instantValidate | false    | bool     | true          | If true, form will be validated after each field change. If false, form will be validated only after clicking submit button. |
 | onError         | false    | function |               | Callback for form that fires when some of validations are not passed. It will return array of elements which not valid. |
 
++ Methods
+
+| Name             | Params | Return | Descriptipon                                       |
+|------------------|--------|--------|----------------------------------------------------|
+| resetValidations |        |        | Reset validation messages for all validated inputs |
+
 #### All validated fields (ValidatorComponent)
+
++ Props
 
 | Prop            | Required | Type     | Default value | Description                                                                            |
 |-----------------|----------|----------|---------------|----------------------------------------------------------------------------------------|
@@ -122,6 +132,15 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
 | name            | true     | string   |               | Name of input                                                                          |
 | validatorListener | false  | function |               | It triggers after each validation. It will return `true` or `false`                    |
 | withRequiredValidator | false | bool  |               | Allow to use `required` validator in any validation trigger, not only form submit      |
+
++ Methods
+
+| Name             | Params | Return | Descriptipon                                       |
+|------------------|--------|--------|----------------------------------------------------|
+| getErrorMessage  |        |        | Get error validation message                       |
+| validate         | value: any, includeRequired: bool | | Run validation for current component |
+| isValid          |        | bool   | Return current validation state                    |
+| makeInvalid      |        |        | Set invalid validation state                       |
 
 ### Implemetations
 

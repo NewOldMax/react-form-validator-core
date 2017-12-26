@@ -134,6 +134,10 @@ class ValidatorForm extends React.Component {
         return null;
     }
 
+    resetValidations() {
+        this.childs.map(child => child.setState({ isValid: true }));
+    }
+
     render() {
         // eslint-disable-next-line
         const { onSubmit, instantValidate, onError, ...rest } = this.props;
