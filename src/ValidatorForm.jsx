@@ -22,6 +22,7 @@ class ValidatorForm extends React.Component {
                 attachToForm: this.attachToForm,
                 detachFromForm: this.detachFromForm,
                 instantValidate: this.instantValidate,
+                debounceTime: this.debounceTime,
             },
         };
     }
@@ -30,6 +31,7 @@ class ValidatorForm extends React.Component {
         this.childs = [];
         this.errors = [];
         this.instantValidate = this.props.instantValidate !== undefined ? this.props.instantValidate : true;
+        this.debounceTime = this.props.debounceTime;
     }
 
     getValidator(validator, value, includeRequired) {
@@ -140,7 +142,7 @@ class ValidatorForm extends React.Component {
 
     render() {
         // eslint-disable-next-line
-        const { onSubmit, instantValidate, onError, ...rest } = this.props;
+        const { onSubmit, instantValidate, onError, debounceTime, ...rest } = this.props;
         return (
             <form {...rest} onSubmit={this.submit}>
                 {this.props.children}
@@ -162,10 +164,12 @@ ValidatorForm.propTypes = {
     instantValidate: PropTypes.bool,
     children: PropTypes.node,
     onError: PropTypes.func,
+    debounceTime: PropTypes.number,
 };
 
 ValidatorForm.defaultProps = {
     onError: () => {},
+    debounceTime: 0,
 };
 
 export default ValidatorForm;

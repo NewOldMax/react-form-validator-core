@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 /* eslint-enable */
 import ValidatorForm from './ValidatorForm';
+import { debounce } from './utils';
 
 class ValidatorComponent extends React.Component {
 
@@ -64,11 +65,13 @@ class ValidatorComponent extends React.Component {
     }
 
     configure() {
-        this.context.form.attachToForm(this);
-        this.instantValidate = this.context.form.instantValidate;
         if (!this.props.name) {
             throw new Error('Form field requires a name property when used');
         }
+        this.context.form.attachToForm(this);
+        this.instantValidate = this.context.form.instantValidate;
+        this.debounceTime = this.context.form.debounceTime;
+        this.validate = debounce(this.validate, this.debounceTime);
     }
 
     validate(value, includeRequired) {
