@@ -33,7 +33,7 @@ class ValidatorComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.instantValidate && nextProps.value !== this.props.value) {
-            this.validate(nextProps.value, nextProps.withRequiredValidator);
+            this.validateDebounced(nextProps.value, nextProps.withRequiredValidator);
         }
         if (nextProps.validators && nextProps.errorMessages &&
             (this.props.validators !== nextProps.validators || this.props.errorMessages !== nextProps.errorMessages)) {
@@ -71,7 +71,7 @@ class ValidatorComponent extends React.Component {
         this.context.form.attachToForm(this);
         this.instantValidate = this.context.form.instantValidate;
         this.debounceTime = this.context.form.debounceTime;
-        this.validate = debounce(this.validate, this.debounceTime);
+        this.validateDebounced = debounce(this.validate, this.debounceTime);
     }
 
     validate(value, includeRequired) {
