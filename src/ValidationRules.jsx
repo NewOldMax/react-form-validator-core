@@ -3,7 +3,7 @@ const isExisty = function (value) {
 };
 
 const isEmpty = function (value) {
-    return value === '' || value === undefined || value === null;
+    return value === '' || value === undefined || value === null || (Array.isArray(value) && !value.length);
 };
 
 const isEmptyTrimed = function (value) {
