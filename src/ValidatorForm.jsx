@@ -13,6 +13,7 @@ class ValidatorForm extends React.Component {
         this.walk = this.walk.bind(this);
         this.attachToForm = this.attachToForm.bind(this);
         this.detachFromForm = this.detachFromForm.bind(this);
+        this.resetValidations = this.resetValidations.bind(this);
         this.childs = [];
     }
 
