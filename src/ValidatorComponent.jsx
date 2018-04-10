@@ -2,43 +2,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 /* eslint-enable */
+import { polyfill } from 'react-lifecycles-compat';
 import ValidatorForm from './ValidatorForm';
 import { debounce } from './utils';
 
 class ValidatorComponent extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.invalid = [];
-
-        this.form = new ValidatorForm();
-
-        this.state = {
-            isValid: true,
-            errorMessages: props.errorMessages,
-            validators: props.validators,
-        };
-
-        this.validate = this.validate.bind(this);
-        this.getErrorMessage = this.getErrorMessage.bind(this);
-        this.makeInvalid = this.makeInvalid.bind(this);
-        this.instantValidate = true;
-        this.configure = this.configure.bind(this);
-    }
-
-    componentWillMount() {
-        this.configure();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.instantValidate && nextProps.value !== this.props.value) {
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (this.instantValidate && nextProps.value !== prevState.value) {
             this.validateDebounced(nextProps.value, nextProps.withRequiredValidator);
         }
+
         if (nextProps.validators && nextProps.errorMessages &&
-            (this.props.validators !== nextProps.validators || this.props.errorMessages !== nextProps.errorMessages)) {
-            this.setState({ validators: nextProps.validators, errorMessages: nextProps.errorMessages });
+            (
+                prevState.validators !== nextProps.validators ||
+                prevState.errorMessages !== nextProps.errorMessages
+            )
+        ) {
+            return {
+                value: nextProps.value,
+                validators: nextProps.validators,
+                errorMessages: nextProps.errorMessages,
+            };
         }
+
+        return null;
+    }
+
+    state = {
+        isValid: true,
+        value: this.props.value,
+        errorMessages: this.props.errorMessages,
+        validators: this.props.validators,
+    }
+
+    componentDidMount() {
+        this.configure();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -49,22 +48,26 @@ class ValidatorComponent extends React.Component {
         this.context.form.detachFromForm(this);
     }
 
-    getErrorMessage() {
-        const type = typeof this.state.errorMessages;
+    getErrorMessage = () => {
+        const { errorMessages } = this.state;
+        const type = typeof errorMessages;
 
         if (type === 'string') {
-            return this.state.errorMessages;
+            return errorMessages;
         } else if (type === 'object') {
             if (this.invalid.length > 0) {
-                return this.state.errorMessages[this.invalid[0]];
+                return errorMessages[this.invalid[0]];
             }
         }
         // eslint-disable-next-line
-        console.log('unknown errorMessages type', this.state.errorMessages);
+        console.log('unknown errorMessages type', errorMessages);
         return true;
     }
 
-    configure() {
+    instantValidate = true
+    invalid = []
+
+    configure = () => {
         if (!this.props.name) {
             throw new Error('Form field requires a name property when used');
         }
@@ -74,13 +77,13 @@ class ValidatorComponent extends React.Component {
         this.validateDebounced = debounce(this.validate, this.debounceTime);
     }
 
-    validate(value, includeRequired) {
+    validate = (value, includeRequired = false, dryRun = false) => {
         this.invalid = [];
         const result = [];
         let valid = true;
         this.state.validators.map((validator, i) => {
             const obj = {};
-            obj[i] = this.form.getValidator(validator, value, includeRequired);
+            obj[i] = ValidatorForm.getValidator(validator, value, includeRequired);
             return result.push(obj);
         });
         result.map(item =>
@@ -93,17 +96,21 @@ class ValidatorComponent extends React.Component {
             }),
         );
 
-        this.setState({ isValid: valid }, () => {
-            this.props.validatorListener(this.state.isValid);
-        });
+        if (!dryRun) {
+            this.setState({ isValid: valid }, () => {
+                this.props.validatorListener(this.state.isValid);
+            });
+        }
     }
 
-    isValid() {
-        return this.state.isValid;
-    }
+    isValid = () => this.state.isValid;
 
-    makeInvalid() {
+    makeInvalid = () => {
         this.setState({ isValid: false });
+    }
+
+    makeValid = () => {
+        this.setState({ isValid: true });
     }
 }
 
@@ -128,5 +135,7 @@ ValidatorComponent.defaultProps = {
     validators: [],
     validatorListener: () => {},
 };
+
+polyfill(ValidatorComponent);
 
 export default ValidatorComponent;
