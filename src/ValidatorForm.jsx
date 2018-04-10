@@ -30,11 +30,8 @@ class ValidatorForm extends React.Component {
         },
     })
 
-    componentDidMount() {
-        this.instantValidate = this.props.instantValidate !== undefined ? this.props.instantValidate : true;
-        this.debounceTime = this.props.debounceTime;
-    }
-
+    instantValidate = this.props.instantValidate !== undefined ? this.props.instantValidate : true
+    debounceTime = this.props.debounceTime
     childs = []
     errors = []
 

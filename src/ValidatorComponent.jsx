@@ -9,10 +9,6 @@ import { debounce } from './utils';
 class ValidatorComponent extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (this.instantValidate && nextProps.value !== prevState.value) {
-            this.validateDebounced(nextProps.value, nextProps.withRequiredValidator);
-        }
-
         if (nextProps.validators && nextProps.errorMessages &&
             (
                 prevState.validators !== nextProps.validators ||
@@ -26,7 +22,9 @@ class ValidatorComponent extends React.Component {
             };
         }
 
-        return null;
+        return {
+            value: nextProps.value,
+        };
     }
 
     state = {
@@ -42,6 +40,12 @@ class ValidatorComponent extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return this.state !== nextState || this.props !== nextProps;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.instantValidate && this.props.value !== prevState.value) {
+            this.validateDebounced(this.props.value, this.props.withRequiredValidator);
+        }
     }
 
     componentWillUnmount() {
