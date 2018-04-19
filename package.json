@@ -1,6 +1,6 @@
 {
   "name": "react-form-validator-core",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Core validator component for react forms.",
   "main": "./lib/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "prop-types": "^15.0.0"
   },
   "dependencies": {
-    "react-lifecycles-compat": "3.0.0"
+    "react-lifecycles-compat": "^3.0.2"
   },
   "devDependencies": {
     "babelify": "7.3.0",
