@@ -61,7 +61,7 @@ class ValidatorForm extends React.Component {
         if (result) {
             this.props.onSubmit(event);
         }
-        return false;
+        return result;
     }
 
     walk = (children, dryRun) => {
