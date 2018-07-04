@@ -71,6 +71,8 @@ class ValidatorComponent extends React.Component {
     instantValidate = true
     invalid = []
 
+    customValidationRule = () => true
+
     configure = () => {
         if (!this.props.name) {
             throw new Error('Form field requires a name property when used');

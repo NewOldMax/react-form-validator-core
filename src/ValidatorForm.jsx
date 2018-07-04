@@ -108,6 +108,12 @@ class ValidatorForm extends React.Component {
             }
             return item;
         });
+
+        if (!component.customValidationRule()) {
+            this.errors.push(input);
+            return false;
+        }
+
         return valid;
     }
 
