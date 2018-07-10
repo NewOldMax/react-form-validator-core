@@ -35,6 +35,10 @@ declare module 'react-form-validator-core' {
     }
 
     export class ValidatorForm extends React.Component<ValidatorFormProps> {
+         static addValidationRule(
+      key: string,
+      validationRule: (value: any) => boolean
+    ): void
         resetValidations: () => void
         isFormValid: (dryRun: boolean) => boolean
     }
