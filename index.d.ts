@@ -1,45 +1,46 @@
 declare module 'react-form-validator-core' {
-    import * as React from 'react'
+  import * as React from 'react'
 
-    interface ValidatorComponentProps
-        extends React.AllHTMLAttributes<HTMLElement> {
-        errorMessages?: string[] | string
-        validators?: string[]
-        validatorListener?: () => void
-        withRequiredValidator?: boolean
-        onChange: (event: any) => void
-    }
+  interface ValidatorComponentProps
+    extends React.AllHTMLAttributes<HTMLElement> {
+    errorMessages?: string[] | string
+    validators?: string[]
+    validatorListener?: () => void
+    withRequiredValidator?: boolean
+    onChange: (event: any) => void
+  }
 
-    interface ValidatorComponentState {
-        isValid
-    }
+  interface ValidatorComponentState {
+    isValid
+  }
 
-    export class ValidatorComponent<
-        P = ValidatorComponentProps,
-        S = ValidatorComponentState
-        > extends React.Component<P, S> {
-        input: any
-        isValid: boolean
+  export class ValidatorComponent<
+    P = ValidatorComponentProps,
+    S = ValidatorComponentState
+  > extends React.Component<P, S> {
+    input: any
+    isValid: boolean
 
-        getErrorMessage: () => string[] | string
-        makeInvalid: () => void
-        makeValid: () => void
-    }
+    getErrorMessage: () => string[] | string
+    makeInvalid: () => void
+    makeValid: () => void
+    validate: (value: any, includeRequired: boolean) => void
+  }
 
-    interface ValidatorFormProps
-        extends React.FormHTMLAttributes<HTMLFormElement> {
-        onSubmit: React.FormEventHandler<HTMLFormElement>
-        instantValidate?: boolean
-        debounceTime?: number
-        onError?: () => void
-    }
+  interface ValidatorFormProps
+    extends React.FormHTMLAttributes<HTMLFormElement> {
+    onSubmit: React.FormEventHandler<HTMLFormElement>
+    instantValidate?: boolean
+    debounceTime?: number
+    onError?: (errors) => void
+  }
 
-    export class ValidatorForm extends React.Component<ValidatorFormProps> {
-         static addValidationRule(
+  export class ValidatorForm extends React.Component<ValidatorFormProps> {
+    static addValidationRule(
       key: string,
       validationRule: (value: any) => boolean
     ): void
-        resetValidations: () => void
-        isFormValid: (dryRun: boolean) => boolean
-    }
+    resetValidations: () => void
+    isFormValid: (dryRun: boolean) => boolean
+  }
 }
