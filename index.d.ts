@@ -11,7 +11,7 @@ declare module 'react-form-validator-core' {
   }
 
   interface ValidatorComponentState {
-    isValid
+    isValid: boolean
   }
 
   export class ValidatorComponent<
