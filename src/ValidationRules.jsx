@@ -3,6 +3,9 @@ const isExisty = function (value) {
 };
 
 const isEmpty = function (value) {
+    if (value instanceof Array) {
+        return value.length !== 0;
+    }
     return value === '' || value === undefined || value === null;
 };
 
