@@ -50,9 +50,9 @@ const validations = {
     minStringLength: (value, length) => validations.isString(value) && value.length >= length,
     maxStringLength: (value, length) => validations.isString(value) && value.length <= length,
 
-    // file related validations
-    maxFileSize: (value, max) => !isExisty(value) || value.size <= parseInt(max, 10),
-    allowedExtensions: (value, fileTypes) => !isExisty(value) || fileTypes.split(',').includes(value.type),
+    // eslint-disable-next-line no-undef
+    maxFileSize: (value, max) => !isExisty(value) || (value instanceof File && value.size <= parseInt(max, 10)),
+    allowedExtensions: (value, fileTypes) => !isExisty(value) || fileTypes.split(',').indexOf(value.type) !== -1,
 };
 
 module.exports = validations;
