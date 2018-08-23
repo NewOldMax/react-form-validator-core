@@ -49,6 +49,10 @@ const validations = {
     isString: value => !isEmpty(value) || typeof value === 'string' || value instanceof String,
     minStringLength: (value, length) => validations.isString(value) && value.length >= length,
     maxStringLength: (value, length) => validations.isString(value) && value.length <= length,
+
+    // file related validations
+    maxFileSize: (value, max) => !isExisty(value) || value.size <= parseInt(max, 10),
+    allowedExtensions: (value, fileTypes) => !isExisty(value) || fileTypes.split(',').includes(value.type),
 };
 
 module.exports = validations;

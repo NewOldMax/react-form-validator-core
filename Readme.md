@@ -20,6 +20,8 @@ Default validation rules:
 + minStringLength
 + maxStringLength
 + isString
++ maxFileSize
++ allowedExtensions
 
 Some rules can accept extra parameter, example:
 ````javascript
