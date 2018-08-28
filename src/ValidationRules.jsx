@@ -51,8 +51,9 @@ const validations = {
     maxStringLength: (value, length) => validations.isString(value) && value.length <= length,
 
     // eslint-disable-next-line no-undef
-    maxFileSize: (value, max) => !isExisty(value) || (value instanceof File && value.size <= parseInt(max, 10)),
-    allowedExtensions: (value, fileTypes) => !isExisty(value) || fileTypes.split(',').indexOf(value.type) !== -1,
+    isFile: value => value instanceof File,
+    maxFileSize: (value, max) => validations.isFile(value) && value.size <= parseInt(max, 10),
+    allowedExtensions: (value, fileTypes) => validations.isFile(value) && fileTypes.split(',').indexOf(value.type) !== -1,
 };
 
 module.exports = validations;
