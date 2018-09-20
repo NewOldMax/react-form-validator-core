@@ -1,6 +1,11 @@
 const debounce = (func, wait, immediate) => {
     let timeout;
-    return function debounced(...args) {
+    function cancel() {
+        if (timeout !== undefined) {
+            clearTimeout(timeout);
+        }
+    }
+    const debounced = function debounced(...args) {
         const context = this;
         const later = function delayed() {
             timeout = null;
@@ -15,6 +20,8 @@ const debounce = (func, wait, immediate) => {
             func.apply(context, args);
         }
     };
+    debounced.cancel = cancel;
+    return debounced;
 };
 
 export {

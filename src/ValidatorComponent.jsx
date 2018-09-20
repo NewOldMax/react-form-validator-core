@@ -50,6 +50,7 @@ class ValidatorComponent extends React.Component {
 
     componentWillUnmount() {
         this.context.form.detachFromForm(this);
+        this.validateDebounced.cancel();
     }
 
     getErrorMessage = () => {
