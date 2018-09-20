@@ -6,7 +6,7 @@ const isEmpty = function (value) {
     if (value instanceof Array) {
         return value.length === 0;
     }
-    return value === '' || value === undefined || value === null;
+    return value === '' || !isExisty(value);
 };
 
 const isEmptyTrimed = function (value) {
@@ -19,7 +19,7 @@ const isEmptyTrimed = function (value) {
 const validations = {
     matchRegexp: (value, regexp) => {
         const validationRegexp = (regexp instanceof RegExp ? regexp : (new RegExp(regexp)));
-        return (!isExisty(value) || isEmpty(value) || validationRegexp.test(value));
+        return (isEmpty(value) || validationRegexp.test(value));
     },
 
     // eslint-disable-next-line
@@ -42,9 +42,13 @@ const validations = {
         return true;
     },
 
-    maxNumber: (value, max) => !isExisty(value) || isEmpty(value) || parseInt(value, 10) <= parseInt(max, 10),
+    maxNumber: (value, max) => isEmpty(value) || parseInt(value, 10) <= parseInt(max, 10),
 
-    minNumber: (value, min) => !isExisty(value) || isEmpty(value) || parseInt(value, 10) >= parseInt(min, 10),
+    minNumber: (value, min) => isEmpty(value) || parseInt(value, 10) >= parseInt(min, 10),
+
+    maxFloat: (value, max) => isEmpty(value) || parseFloat(value) <= parseFloat(max),
+
+    minFloat: (value, min) => isEmpty(value) || parseFloat(value) >= parseFloat(min),
 
     isString: value => !isEmpty(value) || typeof value === 'string' || value instanceof String,
     minStringLength: (value, length) => validations.isString(value) && value.length >= length,

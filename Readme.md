@@ -17,6 +17,8 @@ Default validation rules:
 + isPositive
 + minNumber
 + maxNumber
++ minFloat
++ maxFloat
 + minStringLength
 + maxStringLength
 + isString
