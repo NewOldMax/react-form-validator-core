@@ -95,6 +95,31 @@ render() {
 ...
 ````
 
+````javascript
+...
+import { ValidatorForm } from 'react-form-validator-core';
+...
+render() {
+    return (
+        <ValidatorForm
+            ref="form"
+            onSubmit={this.handleSubmit}
+        >
+            <TextValidator
+                onChange={this.handleChange}
+                name="file"
+                type="file"
+                value={file}
+                validators={['isFile', 'maxFileSize:' + 1 * 1024 * 1024, 'allowedExtensions:image/png,image/jpeg']}
+                errorMessages={['File is not valid', 'Size must not exceed 1MB', 'Only png and jpeg']}
+            />
+            <button type="submit">submit</button>
+        </ValidatorForm>
+    );
+}
+...
+````
+
 #### You can add your own rules
 ````javascript
 ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
