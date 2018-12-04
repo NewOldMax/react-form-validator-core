@@ -122,7 +122,10 @@ class ValidatorForm extends React.Component {
     }
 
     resetValidations = () => {
-        this.childs.map(child => child.setState({ isValid: true }));
+        this.childs.forEach((child) => {
+            child.validateDebounced.cancel();
+            child.setState({ isValid: true });
+        });
     }
 
     isFormValid = (dryRun = true) => this.walk(this.childs, dryRun);
