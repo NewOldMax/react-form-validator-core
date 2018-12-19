@@ -121,7 +121,7 @@ class ValidatorComponent extends React.Component {
 
     makeTouched = () => {
         this.setState({
-            isValid : true
+            touched : true
         });
     }
 
