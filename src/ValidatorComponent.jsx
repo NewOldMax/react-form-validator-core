@@ -28,6 +28,7 @@ class ValidatorComponent extends React.Component {
     }
 
     state = {
+        touched : false,
         isValid: true,
         value: this.props.value,
         errorMessages: this.props.errorMessages,
@@ -117,6 +118,14 @@ class ValidatorComponent extends React.Component {
     makeValid = () => {
         this.setState({ isValid: true });
     }
+
+    makeTouched = () => {
+        this.setState({
+            isValid : true
+        });
+    }
+
+    isTouched = () => this.state.touched;
 }
 
 ValidatorComponent.contextTypes = {

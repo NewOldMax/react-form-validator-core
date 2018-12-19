@@ -99,6 +99,7 @@ class ValidatorForm extends React.Component {
             validateResult = this.constructor.getValidator(validator, value, includeRequired);
             result.push({ input, result: validateResult });
             component.validate(component.props.value, true, dryRun);
+            component.makeTouched();
             return validator;
         });
         result.map((item) => {
