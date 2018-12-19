@@ -146,6 +146,7 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
 | isValid          |        | bool   | Return current validation state                    |
 | makeInvalid      |        |        | Set invalid validation state                       |
 | makeValid        |        |        | Set valid validation state                         |
+| isTouched        |        |        | Returns the input's touched state                  |
 
 ### Implemetations
 
