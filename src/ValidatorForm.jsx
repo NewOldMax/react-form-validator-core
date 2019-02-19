@@ -90,15 +90,14 @@ class ValidatorForm extends React.Component {
     }
 
     validate = (input, includeRequired, dryRun) => {
-        const { value, validators, name } = input.props;
+        const { value, validators } = input.props;
         const result = [];
         let valid = true;
         let validateResult = false;
-        const component = this.find(this.childs, component => component.props.name === name);
         validators.map((validator) => {
             validateResult = this.constructor.getValidator(validator, value, includeRequired);
             result.push({ input, result: validateResult });
-            component.validate(component.props.value, true, dryRun);
+            input.validate(input.props.value, true, dryRun);
             return validator;
         });
         result.map((item) => {
