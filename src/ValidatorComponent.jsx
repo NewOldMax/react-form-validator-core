@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
+import Promise from 'promise-polyfill';
 /* eslint-enable */
 import { polyfill } from 'react-lifecycles-compat';
 import ValidatorForm from './ValidatorForm';
@@ -73,9 +74,6 @@ class ValidatorComponent extends React.Component {
     invalid = []
 
     configure = () => {
-        if (!this.props.name) {
-            throw new Error('Form field requires a name property when used');
-        }
         this.context.form.attachToForm(this);
         this.instantValidate = this.context.form.instantValidate;
         this.debounceTime = this.context.form.debounceTime;
@@ -83,29 +81,25 @@ class ValidatorComponent extends React.Component {
     }
 
     validate = (value, includeRequired = false, dryRun = false) => {
-        this.invalid = [];
-        const result = [];
-        let valid = true;
-        this.state.validators.map((validator, i) => {
-            const obj = {};
-            obj[i] = ValidatorForm.getValidator(validator, value, includeRequired);
-            return result.push(obj);
-        });
-        result.map(item =>
-            Object.keys(item).map((key) => {
-                if (!item[key]) {
+        const validations = Promise.all(
+            this.state.validators.map(validator => ValidatorForm.getValidator(validator, value, includeRequired)),
+        );
+
+        validations.then((results) => {
+            this.invalid = [];
+            let valid = true;
+            results.forEach((result, key) => {
+                if (!result) {
                     valid = false;
                     this.invalid.push(key);
                 }
-                return key;
-            }),
-        );
-
-        if (!dryRun) {
-            this.setState({ isValid: valid }, () => {
-                this.props.validatorListener(this.state.isValid);
             });
-        }
+            if (!dryRun) {
+                this.setState({ isValid: valid }, () => {
+                    this.props.validatorListener(this.state.isValid);
+                });
+            }
+        });
     }
 
     isValid = () => this.state.isValid;
@@ -129,7 +123,6 @@ ValidatorComponent.propTypes = {
         PropTypes.string,
     ]),
     validators: PropTypes.array,
-    name: PropTypes.string,
     value: PropTypes.any,
     validatorListener: PropTypes.func,
     withRequiredValidator: PropTypes.bool,
