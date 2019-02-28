@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
+import Promise from 'promise-polyfill';
 /* eslint-enable */
 import Rules from './ValidationRules';
 
@@ -54,61 +55,79 @@ class ValidatorForm extends React.Component {
             event.preventDefault();
         }
         this.errors = [];
-        const result = this.walk(this.childs);
-        if (this.errors.length) {
-            this.props.onError(this.errors);
-        }
-        if (result) {
-            this.props.onSubmit(event);
-        }
-        return result;
+        this.walk(this.childs).then((result) => {
+            if (this.errors.length) {
+                this.props.onError(this.errors);
+            }
+            if (result) {
+                this.props.onSubmit(event);
+            }
+            return result;
+        });
     }
 
     walk = (children, dryRun) => {
         const self = this;
-        let result = true;
-        if (Array.isArray(children)) {
-            children.forEach((input) => {
-                if (!self.checkInput(input, dryRun)) {
-                    result = false;
-                }
-                return input;
-            });
-        } else {
-            result = self.walk([children], dryRun);
-        }
-        return result;
-    }
-
-    checkInput = (input, dryRun) => {
-        let result = true;
-        const validators = input.props.validators;
-        if (validators && !this.validate(input, true, dryRun)) {
-            result = false;
-        }
-        return result;
-    }
-
-    validate = (input, includeRequired, dryRun) => {
-        const { value, validators } = input.props;
-        const result = [];
-        let valid = true;
-        let validateResult = false;
-        validators.map((validator) => {
-            validateResult = this.constructor.getValidator(validator, value, includeRequired);
-            result.push({ input, result: validateResult });
-            input.validate(input.props.value, true, dryRun);
-            return validator;
-        });
-        result.map((item) => {
-            if (!item.result) {
-                valid = false;
-                this.errors.push(item.input);
+        return new Promise((resolve) => {
+            let result = true;
+            if (Array.isArray(children)) {
+                Promise.all(children.map(input => self.checkInput(input, dryRun))).then((data) => {
+                    data.forEach((item) => {
+                        if (!item) {
+                            result = false;
+                        }
+                    });
+                    resolve(result);
+                });
+            } else {
+                self.walk([children], dryRun).then(result => resolve(result));
             }
-            return item;
         });
-        return valid;
     }
+
+    checkInput = (input, dryRun) => (
+        new Promise((resolve) => {
+            let result = true;
+            const validators = input.props.validators;
+            if (validators) {
+                this.validate(input, true, dryRun).then((data) => {
+                    if (!data) {
+                        result = false;
+                    }
+                    resolve(result);
+                });
+            } else {
+                resolve(result);
+            }
+        })
+    )
+
+    validate = (input, includeRequired, dryRun) => (
+        new Promise((resolve) => {
+            const { value, validators } = input.props;
+            const result = [];
+            let valid = true;
+            const validations = Promise.all(
+                validators.map(validator => (
+                    Promise.all([
+                        this.constructor.getValidator(validator, value, includeRequired),
+                    ]).then((data) => {
+                        result.push({ input, result: data && data[0] });
+                        input.validate(input.props.value, true, dryRun);
+                    })
+                )),
+            );
+            validations.then(() => {
+                result.forEach((item) => {
+                    if (!item.result) {
+                        valid = false;
+                        this.errors.push(item.input);
+                    }
+                });
+                resolve(valid);
+            });
+        })
+    )
 
     find = (collection, fn) => {
         for (let i = 0, l = collection.length; i < l; i++) {
