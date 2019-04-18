@@ -53,6 +53,7 @@ class ValidatorForm extends React.Component {
     submit = (event) => {
         if (event) {
             event.preventDefault();
+            event.persist();
         }
         this.errors = [];
         this.walk(this.childs).then((result) => {
