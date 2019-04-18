@@ -150,7 +150,7 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
 | Name             | Params | Return | Descriptipon                                       |
 |------------------|--------|--------|----------------------------------------------------|
 | resetValidations |        |        | Reset validation messages for all validated inputs |
-| isFormValid      | dryRun: bool (default true) | bool   | Get form validation state (`true` if whole form is valid). Run with `dryRun = false` to show validation errors on form |
+| isFormValid      | dryRun: bool (default true) | Promise   | Get form validation state in a Promise (`true` if whole form is valid). Run with `dryRun = false` to show validation errors on form |
 
 #### All validated fields (ValidatorComponent)
 
