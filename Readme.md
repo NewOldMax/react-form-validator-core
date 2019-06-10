@@ -131,6 +131,12 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
     return true;
 });
 ````
+And remove them
+````javascript
+componentWillUnmount() {
+    ValidatorForm.removeValidationRule('isPasswordMatch');
+}
+````
 
 ### API
 

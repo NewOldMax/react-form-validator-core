@@ -164,6 +164,10 @@ ValidatorForm.addValidationRule = (name, callback) => {
     Rules[name] = callback;
 };
 
+ValidatorForm.removeValidationRule = (name) => {
+    delete Rules[name];
+};
+
 ValidatorForm.childContextTypes = {
     form: PropTypes.object,
 };
