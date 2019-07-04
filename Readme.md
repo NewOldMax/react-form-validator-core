@@ -148,7 +148,7 @@ componentWillUnmount() {
 |-----------------|----------|----------|---------------|------------------------------------------------------------------------------------------------------------------------------|
 | onSubmit        | true     | function |               | Callback for form that fires when all validations are passed                                                                 |
 | instantValidate | false    | bool     | true          | If true, form will be validated after each field change. If false, form will be validated only after clicking submit button. |
-| onError         | false    | function |               | Callback for form that fires when some of validations are not passed. It will return array of elements which not valid. |
+| onError         | false    | function |               | Callback for form that fires when some of validations are not passed. It passees array of elements which not valid. |
 | debounceTime    | false    | number   | 0             | Debounce time for validation i.e. your validation will run after `debounceTime` ms when you stop changing your input |
 
 + Methods
