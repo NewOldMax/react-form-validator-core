@@ -2,6 +2,7 @@
 // Definitions by: Siraj Alam https://github.com/sirajalam049
 
 import validations from "./ValidationRules";
+import React from 'react';
 
 export interface ValidatorComponentProps {
     /**
@@ -36,7 +37,7 @@ declare class ValidatorComponent extends React.Component<ValidatorComponentProps
     getErrorMessage(): boolean | ValidatorComponentProps['errorMessages']
 
     // Run validation for current component
-    validate(value: any, includeRequired: boolean = false, dryRun: boolean = false): void
+    validate(value: any, includeRequired?:boolean, dryRun?: boolean): void
 
     // Return current validation state
     isValid(): boolean
