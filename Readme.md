@@ -177,7 +177,7 @@ componentWillUnmount() {
 
 + Methods
 
-| Name             | Params | Return | Descriptipon                                       |
+| Name             | Params | Return | Description                                        |
 |------------------|--------|--------|----------------------------------------------------|
 | resetValidations |        |        | Reset validation messages for all validated inputs |
 | isFormValid      | dryRun: bool (default true) | Promise   | Get form validation state in a Promise (`true` if whole form is valid). Run with `dryRun = false` to show validation errors on form |
@@ -196,7 +196,7 @@ componentWillUnmount() {
 
 + Methods
 
-| Name             | Params | Return | Descriptipon                                       |
+| Name             | Params | Return | Description                                        |
 |------------------|--------|--------|----------------------------------------------------|
 | getErrorMessage  |        |        | Get error validation message                       |
 | validate         | value: any, includeRequired: bool | | Run validation for current component |
@@ -204,7 +204,7 @@ componentWillUnmount() {
 | makeInvalid      |        |        | Set invalid validation state                       |
 | makeValid        |        |        | Set valid validation state                         |
 
-### Implemetations
+### Implementations
 
  + [material-ui](https://www.npmjs.com/package/react-material-ui-form-validator)
 
