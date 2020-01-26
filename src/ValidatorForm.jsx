@@ -164,6 +164,10 @@ ValidatorForm.addValidationRule = (name, callback) => {
     Rules[name] = callback;
 };
 
+ValidatorForm.hasValidationRule = (name) => {
+    return Rules[name];
+};
+
 ValidatorForm.removeValidationRule = (name) => {
     delete Rules[name];
 };
