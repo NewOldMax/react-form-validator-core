@@ -25,12 +25,12 @@
   "homepage": "https://github.com/NewOldMax/react-form-validator-core#readme",
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0",
-    "prop-types": "^15.0.0"
+    "react-dom": "^15.0.0 || ^16.0.0"
   },
   "dependencies": {
     "react-lifecycles-compat": "^3.0.2",
-    "promise-polyfill": "8.1.0"
+    "promise-polyfill": "8.1.0",
+    "prop-types": "^15.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
@@ -51,7 +51,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "nodemon": "^1.18.3",
-    "serve": "^9.6.0",
+    "serve": "^11.3.0",
     "uglify-js": "2.7.3",
     "utf-8-validate": "1.2.1",
     "watchify": "^3.11.1"
