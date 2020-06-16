@@ -1,6 +1,6 @@
 {
   "name": "react-form-validator-core",
-  "version": "0.6.5",
+  "version": "0.7.0",
   "description": "Core validator component for react forms.",
   "main": "./lib/index.js",
   "scripts": {
@@ -28,9 +28,9 @@
     "react-dom": "^15.0.0 || ^16.0.0"
   },
   "dependencies": {
-    "react-lifecycles-compat": "^3.0.2",
     "promise-polyfill": "8.1.0",
-    "prop-types": "^15.0.0"
+    "prop-types": "^15.0.0",
+    "react-lifecycles-compat": "^3.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
@@ -50,8 +50,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "^6.8.0",
-    "nodemon": "^1.18.3",
-    "serve": "^11.3.0",
+    "nodemon": "^2.0.4",
+    "serve": "^11.3.2",
     "uglify-js": "2.7.3",
     "utf-8-validate": "1.2.1",
     "watchify": "^3.11.1"

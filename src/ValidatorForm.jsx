@@ -6,7 +6,6 @@ import Promise from 'promise-polyfill';
 import Rules from './ValidationRules';
 
 class ValidatorForm extends React.Component {
-
     static getValidator = (validator, value, includeRequired) => {
         let result = true;
         let name = validator;
@@ -164,9 +163,9 @@ ValidatorForm.addValidationRule = (name, callback) => {
     Rules[name] = callback;
 };
 
-ValidatorForm.hasValidationRule = (name) => {
-    return Rules[name];
-};
+ValidatorForm.getValidationRule = name => Rules[name];
+
+ValidatorForm.hasValidationRule = name => Rules[name] && typeof Rules[name] === 'function';
 
 ValidatorForm.removeValidationRule = (name) => {
     delete Rules[name];

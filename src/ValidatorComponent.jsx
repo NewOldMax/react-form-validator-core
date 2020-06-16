@@ -8,7 +8,6 @@ import ValidatorForm from './ValidatorForm';
 import { debounce } from './utils';
 
 class ValidatorComponent extends React.Component {
-
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.validators && nextProps.errorMessages &&
             (
