@@ -50,7 +50,7 @@ const validations = {
 
     minFloat: (value, min) => isEmpty(value) || parseFloat(value) >= parseFloat(min),
 
-    isString: value => !isEmpty(value) || typeof value === 'string' || value instanceof String,
+    isString: value => isEmpty(value) || typeof value === 'string' || value instanceof String,
     minStringLength: (value, length) => validations.isString(value) && value.length >= length,
     maxStringLength: (value, length) => validations.isString(value) && value.length <= length,
 

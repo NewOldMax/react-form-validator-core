@@ -19,9 +19,9 @@ Default validation rules:
 + maxNumber
 + minFloat
 + maxFloat
++ isString
 + minStringLength
 + maxStringLength
-+ isString
 + maxFileSize
 + allowedExtensions
 
@@ -168,6 +168,40 @@ And check is validation rule already in list
 ValidatorForm.hasValidationRule('isPasswordMatch');
 ````
 
+### Migration guide
+
+#### From 0.x to 1.x
+
+Breaking changes was introduced in order to avoid legacy context. You should change `render` method of your input components to `renderValidatorComponent`.
+
+Before:
+````javascript
+import React from 'react';
+import { ValidatorComponent } from 'react-form-validator-core';
+
+class TextValidator extends ValidatorComponent {
+    render() {
+        // return your validated component
+    }
+}
+
+export default TextValidator;
+````
+
+After:
+````javascript
+import React from 'react';
+import { ValidatorComponent } from 'react-form-validator-core';
+
+class TextValidator extends ValidatorComponent {
+    renderValidatorComponent() {
+        // return your validated component
+    }
+}
+
+export default TextValidator;
+````
+
 ### API
 
 #### ValidatorForm
@@ -208,6 +242,7 @@ ValidatorForm.hasValidationRule('isPasswordMatch');
 | name            | true     | string   |               | Name of input                                                                          |
 | validatorListener | false  | function |               | It triggers after each validation. It will return `true` or `false`                    |
 | withRequiredValidator | false | bool  |               | Allow to use `required` validator in any validation trigger, not only form submit      |
+| containerProps | false | object  |               | Allow to customize input wrapper `div`      |
 
 + Methods
 

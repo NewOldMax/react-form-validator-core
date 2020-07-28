@@ -2,8 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Promise from 'promise-polyfill';
+import createReactContext from 'create-react-context';
 /* eslint-enable */
 import Rules from './ValidationRules';
+
+const FormContext = createReactContext('form');
+
+export { FormContext };
 
 class ValidatorForm extends React.Component {
     static getValidator = (validator, value, includeRequired) => {
@@ -21,7 +26,7 @@ class ValidatorForm extends React.Component {
         return result;
     }
 
-    getChildContext = () => ({
+    getFormHelpers = () => ({
         form: {
             attachToForm: this.attachToForm,
             detachFromForm: this.detachFromForm,
@@ -30,10 +35,10 @@ class ValidatorForm extends React.Component {
         },
     })
 
-    instantValidate = this.props.instantValidate !== undefined ? this.props.instantValidate : true
-    debounceTime = this.props.debounceTime
-    childs = []
-    errors = []
+    instantValidate = this.props.instantValidate !== undefined ? this.props.instantValidate : true;
+    debounceTime = this.props.debounceTime;
+    childs = [];
+    errors = [];
 
     attachToForm = (component) => {
         if (this.childs.indexOf(component) === -1) {
@@ -152,9 +157,11 @@ class ValidatorForm extends React.Component {
         // eslint-disable-next-line
         const { onSubmit, instantValidate, onError, debounceTime, children, ...rest } = this.props;
         return (
-            <form {...rest} onSubmit={this.submit}>
-                {children}
-            </form>
+            <FormContext.Provider value={this.getFormHelpers()}>
+                <form {...rest} onSubmit={this.submit}>
+                    {children}
+                </form>
+            </FormContext.Provider>
         );
     }
 }
@@ -169,10 +176,6 @@ ValidatorForm.hasValidationRule = name => Rules[name] && typeof Rules[name] === 
 
 ValidatorForm.removeValidationRule = (name) => {
     delete Rules[name];
-};
-
-ValidatorForm.childContextTypes = {
-    form: PropTypes.object,
 };
 
 ValidatorForm.propTypes = {
