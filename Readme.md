@@ -19,9 +19,9 @@ Default validation rules:
 + maxNumber
 + minFloat
 + maxFloat
++ isString
 + minStringLength
 + maxStringLength
-+ isString
 + maxFileSize
 + allowedExtensions
 
@@ -155,11 +155,51 @@ ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
     return true;
 });
 ````
-And remove them
+Get them
 ````javascript
-componentWillUnmount() {
-    ValidatorForm.removeValidationRule('isPasswordMatch');
+ValidatorForm.getValidationRule('isPasswordMatch');
+````
+Remove them
+````javascript
+ValidatorForm.removeValidationRule('isPasswordMatch');
+````
+And check is validation rule already in list
+````javascript
+ValidatorForm.hasValidationRule('isPasswordMatch');
+````
+
+### Migration guide
+
+#### From 0.x to 1.x
+
+Breaking changes was introduced in order to avoid legacy context. You should change `render` method of your input components to `renderValidatorComponent`.
+
+Before:
+````javascript
+import React from 'react';
+import { ValidatorComponent } from 'react-form-validator-core';
+
+class TextValidator extends ValidatorComponent {
+    render() {
+        // return your validated component
+    }
 }
+
+export default TextValidator;
+````
+
+After:
+````javascript
+import React from 'react';
+import { ValidatorComponent } from 'react-form-validator-core';
+
+class TextValidator extends ValidatorComponent {
+    renderValidatorComponent() {
+        // return your validated component
+    }
+}
+
+export default TextValidator;
 ````
 
 ### API
@@ -175,12 +215,21 @@ componentWillUnmount() {
 | onError         | false    | function |               | Callback for form that fires when some of validations are not passed. It will return array of elements which not valid. |
 | debounceTime    | false    | number   | 0             | Debounce time for validation i.e. your validation will run after `debounceTime` ms when you stop changing your input |
 
-+ Methods
++ Instance methods (via ref)
 
 | Name             | Params | Return | Description                                        |
 |------------------|--------|--------|----------------------------------------------------|
 | resetValidations |        |        | Reset validation messages for all validated inputs |
 | isFormValid      | dryRun: bool (default true) | Promise   | Get form validation state in a Promise (`true` if whole form is valid). Run with `dryRun = false` to show validation errors on form |
+
++ Static methods (via class)
+
+| Name             | Params | Return | Description                                        |
+|------------------|--------|--------|----------------------------------------------------|
+| addValidationRule | name: string, callback: function |        | Add new validation rule |
+| getValidationRule | name: string | function | Get validation rule by name |
+| hasValidationRule | name: string | bool     | Check if rule exsits  |
+| removeValidationRule | name: string |       | Remove validation rule  |
 
 #### All validated fields (ValidatorComponent)
 
@@ -193,6 +242,7 @@ componentWillUnmount() {
 | name            | true     | string   |               | Name of input                                                                          |
 | validatorListener | false  | function |               | It triggers after each validation. It will return `true` or `false`                    |
 | withRequiredValidator | false | bool  |               | Allow to use `required` validator in any validation trigger, not only form submit      |
+| containerProps | false | object  |               | Allow to customize input wrapper `div`      |
 
 + Methods
 

@@ -50,14 +50,14 @@ const validations = {
 
     minFloat: (value, min) => isEmpty(value) || parseFloat(value) >= parseFloat(min),
 
-    isString: value => !isEmpty(value) || typeof value === 'string' || value instanceof String,
+    isString: value => isEmpty(value) || typeof value === 'string' || value instanceof String,
     minStringLength: (value, length) => validations.isString(value) && value.length >= length,
     maxStringLength: (value, length) => validations.isString(value) && value.length <= length,
 
     // eslint-disable-next-line no-undef
-    isFile: value => value instanceof File,
-    maxFileSize: (value, max) => validations.isFile(value) && value.size <= parseInt(max, 10),
-    allowedExtensions: (value, fileTypes) => validations.isFile(value) && fileTypes.split(',').indexOf(value.type) !== -1,
+    isFile: value => isEmpty(value) || value instanceof File,
+    maxFileSize: (value, max) => isEmpty(value) || (validations.isFile(value) && value.size <= parseInt(max, 10)),
+    allowedExtensions: (value, fileTypes) => isEmpty(value) || (validations.isFile(value) && fileTypes.split(',').indexOf(value.type) !== -1),
 };
 
 module.exports = validations;

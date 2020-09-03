@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import Promise from 'promise-polyfill';
 /* eslint-enable */
 import { polyfill } from 'react-lifecycles-compat';
-import ValidatorForm from './ValidatorForm';
+import ValidatorForm, { FormContext } from './ValidatorForm';
 import { debounce } from './utils';
 
 class ValidatorComponent extends React.Component {
-
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.validators && nextProps.errorMessages &&
             (
@@ -50,7 +49,7 @@ class ValidatorComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        this.context.form.detachFromForm(this);
+        this.form.detachFromForm(this);
         this.validateDebounced.cancel();
     }
 
@@ -74,9 +73,9 @@ class ValidatorComponent extends React.Component {
     invalid = []
 
     configure = () => {
-        this.context.form.attachToForm(this);
-        this.instantValidate = this.context.form.instantValidate;
-        this.debounceTime = this.context.form.debounceTime;
+        this.form.attachToForm(this);
+        this.instantValidate = this.form.instantValidate;
+        this.debounceTime = this.form.debounceTime;
         this.validateDebounced = debounce(this.validate, this.debounceTime);
     }
 
@@ -111,11 +110,22 @@ class ValidatorComponent extends React.Component {
     makeValid = () => {
         this.setState({ isValid: true });
     }
-}
 
-ValidatorComponent.contextTypes = {
-    form: PropTypes.object,
-};
+    renderComponent = (form) => {
+        if (!this.form) {
+            this.form = form;
+        }
+        return this.renderValidatorComponent();
+    }
+
+    render() {
+        return (
+            <FormContext.Consumer>
+                {({ form }) => <div {...this.props.containerProps}>{this.renderComponent(form)}</div>}
+            </FormContext.Consumer>
+        );
+    }
+}
 
 ValidatorComponent.propTypes = {
     errorMessages: PropTypes.oneOfType([
@@ -126,6 +136,7 @@ ValidatorComponent.propTypes = {
     value: PropTypes.any,
     validatorListener: PropTypes.func,
     withRequiredValidator: PropTypes.bool,
+    containerProps: PropTypes.object,
 };
 
 ValidatorComponent.defaultProps = {
