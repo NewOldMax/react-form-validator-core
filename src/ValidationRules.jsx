@@ -57,7 +57,8 @@ const validations = {
     // eslint-disable-next-line no-undef
     isFile: value => isEmpty(value) || value instanceof File,
     maxFileSize: (value, max) => isEmpty(value) || (validations.isFile(value) && value.size <= parseInt(max, 10)),
-    allowedExtensions: (value, fileTypes) => isEmpty(value) || (validations.isFile(value) && fileTypes.split(',').indexOf(value.type) !== -1),
+    allowedMimeTypes: (value, fileTypes) => isEmpty(value) || (validations.isFile(value) && fileTypes.split(',').indexOf(value.type) !== -1),
+    allowedExtensions: (value, extensions) => isEmpty(value) || (validations.isFile(value) && validations.isString(value.name) && extensions.split(',').indexOf(value.name.split('.').pop()) !== -1),
 };
 
 module.exports = validations;
