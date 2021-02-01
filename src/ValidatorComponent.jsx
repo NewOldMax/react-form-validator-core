@@ -63,9 +63,11 @@ class ValidatorComponent extends React.Component {
             if (this.invalid.length > 0) {
                 return errorMessages[this.invalid[0]];
             }
+        } else {
+            // eslint-disable-next-line
+            console.log('unknown errorMessages type', errorMessages);
         }
-        // eslint-disable-next-line
-        console.log('unknown errorMessages type', errorMessages);
+        
         return true;
     }
 
