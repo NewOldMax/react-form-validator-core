@@ -66,7 +66,7 @@ class ValidatorComponent extends React.Component {
         }
         // eslint-disable-next-line
         console.log('unknown errorMessages type', errorMessages);
-        return true;
+        return '';
     }
 
     instantValidate = true
