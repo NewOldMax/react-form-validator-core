@@ -84,7 +84,7 @@ class ValidatorComponent extends React.Component {
             this.state.validators.map(validator => ValidatorForm.getValidator(validator, value, includeRequired)),
         );
 
-        validations.then((results) => {
+        return validations.then((results) => {
             this.invalid = [];
             let valid = true;
             results.forEach((result, key) => {
@@ -98,6 +98,7 @@ class ValidatorComponent extends React.Component {
                     this.props.validatorListener(this.state.isValid);
                 });
             }
+            return valid;
         });
     }
 
