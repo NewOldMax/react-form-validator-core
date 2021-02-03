@@ -109,9 +109,8 @@ class ValidatorForm extends React.Component {
 
     validate = (input, includeRequired, dryRun) => (
         new Promise(async (resolve) => {
-            const { value, validators } = input.props;
-            const result = [];
-            const valid = await input.validate(input.props.value, includeRequired, dryRun);
+            const { value } = input.props;
+            const valid = await input.validate(value, includeRequired, dryRun);
             if (!valid) {
                 this.errors.push(input);
             }
