@@ -6,7 +6,7 @@ import createReactContext from 'create-react-context';
 /* eslint-enable */
 import Rules from './ValidationRules';
 
-const FormContext = createReactContext('form');
+const FormContext = React.createContext('form');
 
 export { FormContext };
 
