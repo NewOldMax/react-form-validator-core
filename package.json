@@ -1,6 +1,6 @@
 {
   "name": "react-form-validator-core",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Core validator component for react forms.",
   "main": "./lib/index.js",
   "scripts": {
